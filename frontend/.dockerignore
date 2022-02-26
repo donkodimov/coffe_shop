@@ -1,0 +1,11 @@
+venv
+**/__pycache__/
+*.pyc
+__pycache__/
+Dockerfile
+.dockerignore
+deploy.env
+Makefile
+README
+srcNone
+version.sh
