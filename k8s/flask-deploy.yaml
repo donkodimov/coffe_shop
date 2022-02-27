@@ -20,35 +20,39 @@ spec:
       labels:
         app: coffe-shop-api
     spec:
-      
       containers:
         - name: coffe-shop-api
           image: coffe-shop-api
           imagePullPolicy: Never
           ports:
             - containerPort: 5000
-          
+
           readinessProbe:
             httpGet:
               path: /healthz
               port: 5000
             initialDelaySeconds: 10
             periodSeconds: 10
-          
+
           livenessProbe:
             httpGet:
               path: /healthz
               port: 5000
             initialDelaySeconds: 10
             periodSeconds: 60
-        
-        volumeMounts:
-          - name: coffe-shop-persistent-storage
-            mountPath: /app/database
-      volumes:
+
+          resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+
+      volumeMounts:
         - name: coffe-shop-persistent-storage
-          persistentVolumeClaim:
-            claimName: coffe-shop-pv-claim
+          mountPath: /app/database
+    volumes:
+      - name: coffe-shop-persistent-storage
+        persistentVolumeClaim:
+          claimName: coffe-shop-pv-claim
 ---
 apiVersion: v1
 kind: Service
@@ -56,9 +60,9 @@ metadata:
   name: coffe-shop-api-service
 spec:
   ports:
-  - port: 5000
-    protocol: TCP
-    targetPort: 5000
+    - port: 5000
+      protocol: TCP
+      targetPort: 5000
   selector:
     app: coffe-shop-api
   type: LoadBalancer
