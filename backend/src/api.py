@@ -18,6 +18,20 @@ CORS(app)
 db_drop_and_create_all()
 
 # ROUTES
+
+'''
+GET /healtz
+    This route is for kubernetes readiness and liveness probes
+'''
+@app.route("/healthz")
+def get_health():
+    return jsonify({
+        "success": True
+    }), 200
+
+
+
+
 '''
 @TODO implement endpoint
     GET /drinks
