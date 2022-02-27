@@ -14,8 +14,8 @@ spec:
       paths:
       - backend:
           service:
-            name: coffe-shop-service
+            name: coffe-shop-front
             port:
-              number: 5000
+              number: 8100
         path: /
         pathType: Prefix
