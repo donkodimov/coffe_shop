@@ -1,0 +1,64 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coffe-shop-deployment
+  labels:
+    app: coffe-shop-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coffe-shop-api
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: coffe-shop-api
+    spec:
+      
+      containers:
+        - name: coffe-shop-api
+          image: coffe-shop-api
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 60
+        
+        volumeMounts:
+          - name: coffe-shop-persistent-storage
+            mountPath: /app/database
+      volumes:
+        - name: coffe-shop-persistent-storage
+          persistentVolumeClaim:
+            claimName: coffe-shop-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coffe-shop-api-service
+spec:
+  ports:
+  - port: 5000
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: coffe-shop-api
+  type: LoadBalancer
