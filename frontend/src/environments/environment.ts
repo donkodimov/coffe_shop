@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiServerUrl: 'http://flaskapi:5000', // the running FLASK api server url
+  apiServerUrl: 'http://coffe-shop-api:5000', // the running FLASK api server url
   auth0: {
     url: 'testmacina.eu', // the auth0 domain prefix
     audience: 'id_access', // the audience set for the auth0 app

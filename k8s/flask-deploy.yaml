@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: coffe-shop-deployment
+  name: coffe-shop-api
   labels:
     app: coffe-shop-api
 spec:
@@ -57,7 +57,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: coffe-shop-api-service
+  name: coffe-shop-api
 spec:
   ports:
     - port: 5000
