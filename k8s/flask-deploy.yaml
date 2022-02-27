@@ -65,4 +65,4 @@ spec:
       targetPort: 5000
   selector:
     app: coffe-shop-api
-  type: LoadBalancer
+  type: ClusterIP
